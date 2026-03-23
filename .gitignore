@@ -1,0 +1,67 @@
+# ── Python ────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Distribution / packaging
+.Python
+build/
+dist/
+*.egg-info/
+*.egg
+MANIFEST
+
+# Environments
+.env
+.venv/
+venv/
+ENV/
+env/
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Test / coverage
+.pytest_cache/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+htmlcov/
+
+# Type checkers
+.mypy_cache/
+.pytype/
+.pyre/
+
+# Tox / nox
+.tox/
+.nox/
+
+# Python version pins
+.python-version
+
+# Logs / test reports
+*.log
+junit*.xml
+
+# IDE / editors
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+
+# ── Project-specific ──────────────────────────────────────────────────────────
+# Exclude test .iar archives (can be large); commit fixtures explicitly
+*.iar
+
+# Generated diagram output (not committed; produced by running the tool)
+sequence_diagram.puml
+sequence_diagram.md
+sequence_diagram.png
