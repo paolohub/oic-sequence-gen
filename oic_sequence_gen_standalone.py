@@ -1011,6 +1011,7 @@ Examples:
   oic-sequence-gen --input my_integration.iar
   oic-sequence-gen --input integration.iar --formats puml md png
   oic-sequence-gen --input integration.iar --output ./docs --formats puml md
+  oic-sequence-gen --input integration.iar --name my_diagram --formats puml md png
 """,
     )
     arg_parser.add_argument(
@@ -1026,6 +1027,10 @@ Examples:
         choices=["puml", "md", "png"],
         help="Output formats: puml (PlantUML), md (Mermaid Markdown), png",
     )
+    arg_parser.add_argument(
+        "--name", "-n", default=None,
+        help="Base name for output files (default: sequence_diagram)",
+    )
     args = arg_parser.parse_args()
 
     iar_path = Path(args.input)
@@ -1038,6 +1043,7 @@ Examples:
 
     out_dir = Path(args.output) if args.output else iar_path.parent
     out_dir.mkdir(parents=True, exist_ok=True)
+    out_name = args.name if args.name else "sequence_diagram"
 
     # ── Extract to a temporary directory ──────────────────────────────────────
     work_dir = tempfile.mkdtemp(prefix="oic_iar_")
@@ -1060,21 +1066,21 @@ Examples:
         for fmt in args.formats:
             if fmt == "puml":
                 content = generate_puml(parser)
-                out_path = out_dir / "sequence_diagram.puml"
+                out_path = out_dir / f"{out_name}.puml"
                 out_path.write_text(content, encoding="utf-8")
                 print(f"  [puml]  -> {out_path}")
                 puml_content = content
 
             elif fmt == "md":
                 content = generate_mermaid(parser)
-                out_path = out_dir / "sequence_diagram.md"
+                out_path = out_dir / f"{out_name}.md"
                 out_path.write_text(content, encoding="utf-8")
                 print(f"  [md]    -> {out_path}")
 
             elif fmt == "png":
                 if puml_content is None:
                     puml_content = generate_puml(parser)
-                out_path = out_dir / "sequence_diagram.png"
+                out_path = out_dir / f"{out_name}.png"
                 ok = generate_png(puml_content, str(out_path))
                 if ok:
                     print(f"  [png]   -> {out_path}")

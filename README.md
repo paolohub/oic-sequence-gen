@@ -62,7 +62,7 @@ Both the package command and the standalone script accept the same arguments:
 
 ```
 usage: oic-sequence-gen [-h] --input INPUT [--output OUTPUT]
-                        [--formats {puml,md,png} ...]
+                        [--formats {puml,md,png} ...] [--name NAME]
 
 options:
   -h, --help            show this help message and exit
@@ -70,6 +70,7 @@ options:
   --output OUTPUT, -o   Output directory (default: same directory as --input)
   --formats FORMAT ..., -f
                         Output formats: puml, md, png  (default: puml md)
+  --name NAME, -n       Base name for output files (default: sequence_diagram)
 ```
 
 ### Examples
@@ -81,17 +82,25 @@ python oic_sequence_gen_standalone.py --input integration.iar
 # All three formats into a specific directory — standalone
 python oic_sequence_gen_standalone.py --input integration.iar --output ./docs --formats puml md png
 
+# Custom output file name
+python oic_sequence_gen_standalone.py --input integration.iar --name my_diagram --formats puml md png
+
 # Mermaid only — via uv package
 uv run oic-sequence-gen -i integration.iar -f md
+
+# Custom name — via uv package
+uv run oic-sequence-gen -i integration.iar -n my_diagram -f puml md
 ```
 
 ### Output files
 
 | Format | File | Description |
 |--------|------|-------------|
-| `puml` | `sequence_diagram.puml` | PlantUML source with full skinparam styling |
-| `md`   | `sequence_diagram.md`   | Mermaid `sequenceDiagram` inside a Markdown fence |
-| `png`  | `sequence_diagram.png`  | Raster image (requires PlantUML or internet access) |
+| `puml` | `<name>.puml` | PlantUML source with full skinparam styling |
+| `md`   | `<name>.md`   | Mermaid `sequenceDiagram` inside a Markdown fence |
+| `png`  | `<name>.png`  | Raster image (requires PlantUML or internet access) |
+
+`<name>` defaults to `sequence_diagram`; override with `--name` / `-n`.
 
 ---
 
@@ -228,6 +237,7 @@ oic-sequence-gen/
 │           ├── mermaid.py       # Mermaid Markdown
 │           └── png.py           # PNG via local CLI or web fallback
 ├── tests/
+│   ├── test_cli.py
 │   ├── test_constants.py
 │   ├── test_parser.py
 │   └── test_generators.py
