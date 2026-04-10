@@ -14,6 +14,11 @@ from oic_sequence_gen.cli import main
 
 FIXTURE_IAR = Path(__file__).parent / "fixtures" / "ST_INB_JOB_PROF_SKIL_UPLD_027_01.00.0000.iar"
 
+_skip_no_iar = pytest.mark.skipif(
+    not FIXTURE_IAR.exists(),
+    reason=f"No .iar fixture found at {FIXTURE_IAR}",
+)
+
 
 def _run(args: list[str], monkeypatch) -> None:
     """Invoke main() with the given argument list."""
@@ -24,6 +29,7 @@ def _run(args: list[str], monkeypatch) -> None:
 
 # ── Default output name ────────────────────────────────────────────────────────
 
+@_skip_no_iar
 class TestDefaultName:
     def test_default_puml_name(self, tmp_path, monkeypatch):
         _run(["--input", str(FIXTURE_IAR), "--output", str(tmp_path), "--formats", "puml"], monkeypatch)
@@ -41,6 +47,7 @@ class TestDefaultName:
 
 # ── Custom output name (--name) ────────────────────────────────────────────────
 
+@_skip_no_iar
 class TestCustomName:
     def test_custom_puml_name(self, tmp_path, monkeypatch):
         _run(["--input", str(FIXTURE_IAR), "--output", str(tmp_path),
