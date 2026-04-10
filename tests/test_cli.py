@@ -11,6 +11,7 @@ import pytest
 from oic_sequence_gen.cli import main
 
 
+
 # ── Helpers ────────────────────────────────────────────────────────────────────
 
 FIXTURE_IAR = Path(__file__).parent / "fixtures" / "ST_INB_JOB_PROF_SKIL_UPLD_027_01.00.0000.iar"

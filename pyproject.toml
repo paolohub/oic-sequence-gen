@@ -56,6 +56,9 @@ target-version = "py38"
 select = ["E", "F", "W", "I", "UP"]
 ignore = ["E501"]   # line-length handled by formatter
 
+[tool.ruff.lint.isort]
+known-first-party = ["oic_sequence_gen"]
+
 # ── Pytest ────────────────────────────────────────────────────────────────────
 [tool.pytest.ini_options]
 testpaths = ["tests"]
